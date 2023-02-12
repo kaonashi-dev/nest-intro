@@ -9,21 +9,11 @@ const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
 export class CarsService {
 
    private cars: Array<Car> = [
-      {
-         id: uuid('Toyota', MY_NAMESPACE),
-         brand: 'Toyota',
-         model: 'Corolla'
-      },
-      {
-         id: uuid('Honda', MY_NAMESPACE),
-         brand: 'Honda',
-         model: 'Covic'
-      },
-      {
-         id: uuid('Jeep', MY_NAMESPACE),
-         brand: 'Jeep',
-         model: 'Cherokee'
-      }
+      // {
+      //    id: uuid('Toyota', MY_NAMESPACE),
+      //    brand: 'Toyota',
+      //    model: 'Corolla'
+      // }
    ];
 
    public findAll() {
