@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
 
 @Controller('movie')
 export class MovieController {
-  constructor(private readonly movieService: MovieService) {}
+  constructor(private readonly movieService: MovieService) { }
 
   @Post()
+  @HttpCode(HttpStatus.OK)
   create(@Body() createMovieDto: CreateMovieDto) {
     return this.movieService.create(createMovieDto);
   }
@@ -17,18 +19,18 @@ export class MovieController {
     return this.movieService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.movieService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.movieService.findOne(term);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.movieService.update(+id, updateMovieDto);
+  @Patch(':term')
+  update(@Param('term') term: string, @Body() updateMovieDto: UpdateMovieDto) {
+    return this.movieService.update(term, updateMovieDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.movieService.remove(+id);
+  remove(@Param('id', ParseMongoIdPipe) id: string) {
+    return this.movieService.remove(id);
   }
 }
