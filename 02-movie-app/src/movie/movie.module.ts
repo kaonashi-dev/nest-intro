@@ -15,6 +15,7 @@ import { Movie, MovieSchema } from './entities/movie.entity';
         schema: MovieSchema,
       }
     ]
-  )]
+  )],
+  exports: [MongooseModule]
 })
 export class MovieModule { }
