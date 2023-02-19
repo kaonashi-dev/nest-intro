@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
@@ -25,8 +26,13 @@ export class MovieService {
 
 	}
 
-	findAll() {
-		return `This action returns all movie`;
+	findAll(paginationDto: PaginationDto) {
+
+		const { limit = 5, offset = 0 } = paginationDto;
+
+		return this.movieModel.find()
+			.limit(limit)
+			.skip(offset);
 	}
 
 	async findOne(term: string) {
@@ -69,9 +75,9 @@ export class MovieService {
 		// await movie.deleteOne();
 
 		// const response = await this.movieModel.findByIdAndDelete(id);
-		
+
 		const { deletedCount } = await this.movieModel.deleteOne({ _id: id });
-		
+
 		if (deletedCount === 0)
 			throw new BadRequestException('Movie not found');
 

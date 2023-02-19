@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('movie')
 export class MovieController {
@@ -15,8 +16,8 @@ export class MovieController {
   }
 
   @Get()
-  findAll() {
-    return this.movieService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.movieService.findAll(paginationDto);
   }
 
   @Get(':term')
