@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  movieapp:
+    depends_on:
+      - db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: movie-docker
+    container_name: movieapp
+    restart: always # reiniciar el contenedor si se detiene
+    ports:
+      - "${PORT}:${PORT}"
+    # working_dir: /var/www/movie
+    environment:
+      MONGODB: ${MONGODB}
+      PORT: ${PORT}
+    # volumes:
+    #   - ./:/var/www/movie
+
+  db:
+    image: mongo:5
+    container_name: mongo-movie
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: nest-movie-app
+    volumes:
+      - ./mongo:/data/db

@@ -15,3 +15,15 @@ docker-compose up -d
 ```
 http://localhost:3000/api/seed/
 ```
+
+# Build
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+
+```
+
+# Run
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up
+
+```
