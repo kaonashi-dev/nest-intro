@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
 
-   @PrimaryColumn('uuid')
+   @PrimaryGeneratedColumn('uuid')
    id: string;
 
    @Column({
@@ -13,7 +13,7 @@ export class Product {
    title: string;
 
    @Column({
-      type: 'numeric',
+      type: 'float',
       default: 0
    })
    price: number;
@@ -28,10 +28,9 @@ export class Product {
       unique: true,
       type: 'text',
    })
-   slot: string;
+   slug: string;
 
    @Column({
-      unique: true,
       type: 'numeric',
       default: 0,
    })
@@ -46,6 +45,16 @@ export class Product {
    @Column({
       type: 'text',
    })
-   gender: string; 
+   gender: string;
+
+   @BeforeInsert()
+   checkSlugInsert() {
+      if (!this.slug) this.slug = this.title;
+
+      this.slug = this.slug
+         .toLowerCase()
+         .replaceAll(' ', '-')
+         .replaceAll("'", '')
+   }
 
 }
