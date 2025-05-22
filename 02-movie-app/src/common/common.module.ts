@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
+import { NanoidService } from './services/nanoid.service';
 
-@Module({})
+@Module({
+  providers: [NanoidService],
+  exports: [NanoidService],
+})
 export class CommonModule {}
